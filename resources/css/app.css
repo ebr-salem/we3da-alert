@@ -35,6 +35,11 @@
     [dir='rtl'] {
         text-align: right;
     }
+
+    button:not(:disabled),
+    [role='button']:not(:disabled) {
+        cursor: pointer;
+    }
 }
 
 @layer utilities {
