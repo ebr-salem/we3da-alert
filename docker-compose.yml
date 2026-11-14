@@ -1,0 +1,42 @@
+name: we7da
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: we7da-message-sender:dev
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+      - "5173:5173"
+    env_file:
+      - .env
+    environment:
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: 8000
+      APP_URL: http://localhost:8000
+    volumes:
+      - .:/var/www/html
+      - vendor:/var/www/html/vendor
+      - node_modules:/var/www/html/node_modules
+    command: ["php", "artisan", "dev", "--inline"]
+
+  scheduler:
+    image: we7da-message-sender:dev
+    restart: unless-stopped
+    depends_on:
+      - app
+    env_file:
+      - .env
+    environment:
+      RUN_MIGRATIONS: "false"
+    volumes:
+      - .:/var/www/html
+      - vendor:/var/www/html/vendor
+      - node_modules:/var/www/html/node_modules
+    command: ["php", "artisan", "schedule:work"]
+
+volumes:
+  vendor:
+  node_modules:
