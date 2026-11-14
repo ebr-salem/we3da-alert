@@ -1,0 +1,68 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../js/**/*.jsx';
+
+@theme {
+    --font-sans: 'Cairo', 'Tajawal', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-brand-50: #effcf9;
+    --color-brand-100: #d6f7f0;
+    --color-brand-200: #b0eee3;
+    --color-brand-300: #7bdfd1;
+    --color-brand-400: #43c8b8;
+    --color-brand-500: #1fad9f;
+    --color-brand-600: #158b82;
+    --color-brand-700: #146f69;
+    --color-brand-800: #145955;
+    --color-brand-900: #154a47;
+    --color-brand-950: #062c2b;
+}
+
+@layer base {
+    html {
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+        @apply bg-slate-50 text-slate-800;
+    }
+
+    [dir='rtl'] {
+        text-align: right;
+    }
+}
+
+@layer utilities {
+    .scrollbar-thin::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+        @apply rounded-full bg-slate-300;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar-track {
+        @apply bg-transparent;
+    }
+
+    @keyframes fade-in-up {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in-up {
+        animation: fade-in-up 0.35s ease-out both;
+    }
+}
