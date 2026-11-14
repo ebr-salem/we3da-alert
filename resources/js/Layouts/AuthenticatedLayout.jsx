@@ -98,7 +98,9 @@ function SidebarContent({ url, user, onNavigate }) {
 }
 
 export default function AuthenticatedLayout({ children, title }) {
-    const { auth, url } = usePage().props;
+    const page = usePage();
+    const { auth } = page.props;
+    const url = page.url;
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     return (
