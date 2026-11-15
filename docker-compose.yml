@@ -5,32 +5,38 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: we7da-message-sender:dev
+    image: we7da-message-sender:latest
     restart: unless-stopped
     ports:
       - "8000:8000"
-      - "5173:5173"
     env_file:
       - .env
     environment:
       SERVER_HOST: 0.0.0.0
       SERVER_PORT: 8000
-      APP_URL: http://localhost:8000
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_URL: https://we7da.iclever.online
+      BUILD_ASSETS: "true"
     volumes:
       - .:/var/www/html
       - vendor:/var/www/html/vendor
       - node_modules:/var/www/html/node_modules
-    command: ["php", "artisan", "dev", "--inline"]
+    command: ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
 
   scheduler:
-    image: we7da-message-sender:dev
+    image: we7da-message-sender:latest
     restart: unless-stopped
     depends_on:
       - app
     env_file:
       - .env
     environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_URL: https://we7da.iclever.online
       RUN_MIGRATIONS: "false"
+      BUILD_ASSETS: "false"
     volumes:
       - .:/var/www/html
       - vendor:/var/www/html/vendor

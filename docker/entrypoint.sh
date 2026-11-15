@@ -23,6 +23,14 @@ if [ ! -f database/database.sqlite ]; then
     touch database/database.sqlite
 fi
 
+rm -f public/hot
+
+if [ "${BUILD_ASSETS:-true}" != "false" ]; then
+    npm run build
+fi
+
+php artisan optimize:clear --no-interaction
+
 if [ "${RUN_MIGRATIONS:-true}" != "false" ]; then
     php artisan migrate --force --no-interaction
 fi
